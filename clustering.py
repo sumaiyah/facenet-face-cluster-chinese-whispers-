@@ -86,7 +86,7 @@ def _chinese_whispers(encoding_list, threshold=0.75, iterations=20):
 
     # Iterate
     for _ in range(0, iterations):
-        cluster_nodes = G.nodes()
+        cluster_nodes = list(G.nodes())
         shuffle(cluster_nodes)
         for node in cluster_nodes:
             neighbors = G[node]
