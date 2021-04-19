@@ -19,6 +19,7 @@ def face_distance(face_encodings, face_to_compare):
         return np.empty((0))
 
     #return 1/np.linalg.norm(face_encodings - face_to_compare, axis=1)
+    face_to_compare = np.array(face_to_compare)
     return np.sum(face_encodings*face_to_compare,axis=1)
 
 def load_model(model_dir, meta_file, ckpt_file):
