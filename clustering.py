@@ -29,15 +29,12 @@ def load_model(model_dir, meta_file, ckpt_file):
 
 def _chinese_whispers(encoding_list, threshold=0.75, iterations=20):
     """ Chinese Whispers Algorithm
-
     Modified from Alex Loveless' implementation,
     http://alexloveless.co.uk/data/chinese-whispers-graph-clustering-in-python/
-
     Inputs:
         encoding_list: a list of facial encodings from face_recognition
         threshold: facial match threshold,default 0.6
         iterations: since chinese whispers is an iterative algorithm, number of times to iterate
-
     Outputs:
         sorted_clusters: a list of clusters, a cluster being a list of imagepaths,
             sorted by largest cluster to smallest
@@ -94,13 +91,13 @@ def _chinese_whispers(encoding_list, threshold=0.75, iterations=20):
 
             for ne in neighbors:
                 if isinstance(ne, int):
-                    if G.node[ne]['cluster'] in clusters:
+                    if G.nodes[ne]['cluster'] in clusters:
                         #该节点邻居节点的类别的权重
                         #对应上面的字典cluster的意思就是
                         #对应的某个路径下文件的权重
-                        clusters[G.node[ne]['cluster']] += G[node][ne]['weight']
+                        clusters[G.nodes[ne]['cluster']] += G[node][ne]['weight']
                     else:
-                        clusters[G.node[ne]['cluster']] = G[node][ne]['weight']
+                        clusters[G.nodes[ne]['cluster']] = G[node][ne]['weight']
 
             # find the class with the highest edge weight sum
             edge_weight_sum = 0
@@ -112,12 +109,12 @@ def _chinese_whispers(encoding_list, threshold=0.75, iterations=20):
                     max_cluster = cluster
 
             # set the class of target node to the winning local class
-            G.node[node]['cluster'] = max_cluster
+            G.nodes[node]['cluster'] = max_cluster
 
     clusters = {}
 
     # Prepare cluster output
-    for (_, data) in G.node.items():
+    for (_, data) in G.nodes.items():
         cluster = data['cluster']
         path = data['path']
 
